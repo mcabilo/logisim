@@ -79,7 +79,8 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
-    <comp loc="(300,220)" name="ProgramCounter"/>
+    <comp loc="(510,270)" name="ArithmeticLogicUnit"/>
+    <comp loc="(320,240)" name="ProgramCounter"/>
   </circuit>
   <circuit name="Register">
     <a name="circuit" val="Register"/>
@@ -531,13 +532,13 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabelfont" val="SansSerif plain 12"/>
     <appear>
       <polygon fill="none" points="101,171 129,171 141,189 149,171 179,171 159,210 122,210" stroke="#000000" stroke-width="2"/>
-      <circ-port height="10" pin="790,150" width="10" x="85" y="55"/>
+      <circ-port height="10" pin="790,150" width="10" x="135" y="205"/>
       <circ-port height="8" pin="80,50" width="8" x="116" y="166"/>
       <circ-port height="8" pin="220,50" width="8" x="156" y="166"/>
       <circ-port height="8" pin="420,30" width="8" x="116" y="196"/>
       <circ-port height="8" pin="710,290" width="8" x="106" y="186"/>
-      <circ-port height="10" pin="1180,510" width="10" x="85" y="105"/>
-      <circ-anchor facing="east" height="6" width="6" x="87" y="57"/>
+      <circ-port height="10" pin="1180,510" width="10" x="165" y="185"/>
+      <circ-anchor facing="east" height="6" width="6" x="167" y="187"/>
     </appear>
     <wire from="(680,440)" to="(680,450)"/>
     <wire from="(660,460)" to="(660,470)"/>
@@ -760,6 +761,7 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="width" val="8"/>
+      <a name="label" val="Status"/>
       <a name="labelloc" val="east"/>
     </comp>
     <comp lib="3" loc="(440,160)" name="Subtractor"/>
