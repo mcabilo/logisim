@@ -1,0 +1,308 @@
+v2.0 raw
+1000  ###  LD r0, 0x0       // Load a 0 to ensure a proper jump
+a109  ###  JZ r1, 0x1, 0x9  // Jump to our program start
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Display Function
+      ###  // ----------------------------------------------------------------------------
+c100  ###  POP r1           // Pop out a letter
+c000  ###  POP r0
+      ###  // Determine if its our null terminator
+6201  ###  OR r2, r0, r1    // Or the two values
+a029  ###  JZ r2, 0x0, 0x9  // If the two ored together are all 0's, then we've found the null, exit the function
+      ###
+3001  ###  DISP r0, r1      // Display Character
+1700  ###  LD r7, 0x0       // Load a 0 to ensure proper jump
+a072  ###  JZ r7, 0x0, 0x2  // Jump to beginning of print function to print next character
+      ###
+c000  ###  POP r0           // Return code
+c100  ###  POP r1           // Load our return address out of memory
+9001  ###  JMP r0, r1       // Jump to the return location in memory
+      ###  // ----------------------------------------------------------------------------
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Addition Function
+      ###  // ----------------------------------------------------------------------------
+1600  ###  LD r6 0x0        // Load a 0 to test against while looping
+c100  ###  POP r1           // Pop out two numbers
+c000  ###  POP r0           // We will return here to pop out subsequent numbers assuming we don't get a null
+      ###
+      ###  // Determine if its our null terminator
+6206  ###  OR r2, r0, r6    // Or the two values
+a124  ###  JZ r2, 0x1, 0x4  // If the two ored together are all 0's, then we've found the null, exit the function
+      ###
+7101  ###  ADD r1, r0, r1   // Preform the addition and store it into r1 so when we loop into here again we re-use the number
+      ###
+1700  ###  LD r7, 0x0       // Load a 0 to ensure proper jump
+a07e  ###  JZ r7, 0x0, 0xE  // Jump to beginning of addition function to add our next character
+      ###
+      ###  // Return method - Display the number and jump out of the function
+1703  ###  LD r7, 0x3       // Load the 3 to display a number in ASCII
+3071  ###  DISP r7, r1      // Display the number
+      ###
+c000  ###  POP r0           // Return code
+c100  ###  POP r1           // Load our return address out of memory
+9001  ###  JMP r0, r1       // Jump to the return location in memory
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Say Hello (Program Start, 0x19)
+      ###  // ----------------------------------------------------------------------------
+b003  ###  PUSH 0x3
+b003  ###  PUSH 0x3 // Our return address when done
+      ###
+b000  ###  PUSH 0x0
+b000  ###  PUSH 0x0 // Null terminator so the print method knows when to end
+      ###
+b000  ###  PUSH 0x0
+b00d  ###  PUSH 0xD // New line
+      ###
+b006  ###  PUSH 0x6
+b00c  ###  PUSH 0xC // l
+      ###
+b006  ###  PUSH 0x6
+b00c  ###  PUSH 0xC // l
+      ###
+b006  ###  PUSH 0x6
+b001  ###  PUSH 0x1 // a
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // space
+      ###
+b006  ###  PUSH 0x6
+b00f  ###  PUSH 0xF // o
+      ###
+b006  ###  PUSH 0x6
+b00c  ###  PUSH 0xC // l
+      ###
+b006  ###  PUSH 0x6
+b00c  ###  PUSH 0xC // l
+      ###
+b006  ###  PUSH 0x6
+b005  ###  PUSH 0x5 // e
+      ###
+b004  ###  PUSH 0x4
+b008  ###  PUSH 0x8 // H
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a002  ###  JZ r0, 0x0, 0x2 // Jump to the display function
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Addition
+      ###  // ----------------------------------------------------------------------------
+b004  ###  PUSH 0x4
+b009  ###  PUSH 0x9 // Our return address when done
+      ###
+b000  ###  PUSH 0x0
+b000  ###  PUSH 0x0 // Null terminator so the print method knows when to end
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b00d  ###  PUSH 0xD // =
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b004  ###  PUSH 0x4 // 4
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b002  ###  PUSH 0x2
+b00b  ###  PUSH 0xB // +
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b003  ###  PUSH 0x3 // 3
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a002  ###  JZ r0, 0x0, 0x2 // Jump to the display function
+      ###
+      ###  // --------------------
+      ###  // Actual Addition
+      ###  // --------------------
+b005  ###  PUSH 0x5
+b000  ###  PUSH 0x0 // Our return address when done
+      ###
+b000  ###  PUSH 0x0 // Null terminator to end the addition
+      ###
+b003  ###  PUSH 0x3 // Our numbers to add
+b004  ###  PUSH 0x4
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a00c  ###  JZ r0, 0x0, 0xC // Jump to the addition function
+      ###
+      ###  // We will return here after the addition function and display a new line
+1000  ###  LD r0, 0x0
+110d  ###  LD r1, 0xD
+3001  ###  DISP r0, r1
+      ###  // ----------------------------------------------------------------------------
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Software Multiplication - Adding three three times
+      ###  // ----------------------------------------------------------------------------
+b006  ###  PUSH 0x6
+b009  ###  PUSH 0x9 // Our return address when done
+      ###
+b000  ###  PUSH 0x0
+b000  ###  PUSH 0x0 // Null terminator so the print method knows when to end
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b00d  ###  PUSH 0xD // =
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b003  ###  PUSH 0x3 // 3
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b002  ###  PUSH 0x2
+b00a  ###  PUSH 0xA // *
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b003  ###  PUSH 0x3 // 3
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a002  ###  JZ r0, 0x0, 0x2 // Jump to the display function
+      ###
+      ###  // --------------------
+      ###  // Software Multiplication
+      ###  // --------------------
+b007  ###  PUSH 0x7
+b001  ###  PUSH 0x1 // Our return address when done
+      ###
+b000  ###  PUSH 0x0 // Null terminator to end the addition
+      ###
+b003  ###  PUSH 0x3 // Three three's to simulate the software multiplication
+b003  ###  PUSH 0x3
+b003  ###  PUSH 0x3
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a00c  ###  JZ r0, 0x0, 0xC // Jump to the addition function
+      ###
+      ###  // We will return here after the addition function and display a new line
+1000  ###  LD r0, 0x0
+110d  ###  LD r1, 0xD
+3001  ###  DISP r0, r1
+      ###  // ----------------------------------------------------------------------------
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Software Subtraction
+      ###  // ----------------------------------------------------------------------------
+b008  ###  PUSH 0x8
+b00a  ###  PUSH 0xA // Our return address when done
+      ###
+b000  ###  PUSH 0x0
+b000  ###  PUSH 0x0 // Null terminator so the print method knows when to end
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b00d  ###  PUSH 0xD // =
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b003  ###  PUSH 0x3 // 3
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b002  ###  PUSH 0x2
+b00d  ###  PUSH 0xD // -
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b004  ###  PUSH 0x4 // 4
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a002  ###  JZ r0, 0x0, 0x2 // Jump to the display function
+      ###
+      ###  // --------------------
+      ###  // Actual Subtraction
+      ###  // --------------------
+1004  ###  LD r0 0x4      // Load our initial data
+1103  ###  LD r1 0x3
+      ###
+8110  ###  NOT r1, r1     // Invert the negative number to make a 1's compliment
+      ###
+1201  ###  LD r2 0x1
+7112  ###  ADD r1, r1, r2 // Add 1 to the 1's compliment to make 2's compliment
+      ###
+7210  ###  ADD r2, r1, r0 // Add the 2's compliment and initial number together
+      ###
+1703  ###  LD r7, 0x3     // Load the 3 to display a number in ASCII
+3072  ###  DISP r7, r2    // Display the number
+      ###
+1000  ###  LD r0, 0x0
+110d  ###  LD r1, 0xD
+3001  ###  DISP r0, r1
+      ###  // ----------------------------------------------------------------------------
+      ###
+      ###  // ----------------------------------------------------------------------------
+      ###  // Hardware Subtraction
+      ###  // ----------------------------------------------------------------------------
+b00a  ###  PUSH 0xA
+b00b  ###  PUSH 0xB // Our return address when done
+      ###
+b000  ###  PUSH 0x0
+b000  ###  PUSH 0x0 // Null terminator so the print method knows when to end
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b00d  ###  PUSH 0xD // =
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b002  ###  PUSH 0x2 // 2
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b002  ###  PUSH 0x2
+b00d  ###  PUSH 0xD // -
+      ###
+b002  ###  PUSH 0x2
+b000  ###  PUSH 0x0 // Space
+      ###
+b003  ###  PUSH 0x3
+b005  ###  PUSH 0x5 // 5
+      ###
+1000  ###  LD r0, 0x0      // Load a 0 to ensure a proper jump
+a002  ###  JZ r0, 0x0, 0x2 // Jump to the display function
+      ###
+      ###  // --------------------
+      ###  // Actual Subtraction
+      ###  // --------------------
+1005  ###  LD r0 0x5      // Load our initial data
+1102  ###  LD r1 0x2
+      ###
+d201  ###  SUB r2, r0, r1 // Preform the hardware subtraction
+      ###
+1703  ###  LD r7, 0x3     // Load the 3 to display a number in ASCII
+3072  ###  DISP r7, r2    // Display the number
+      ###
+1000  ###  LD r0, 0x0
+110d  ###  LD r1, 0xD
+3001  ###  DISP r0, r1
