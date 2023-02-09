@@ -1,6 +1,6 @@
 v2.0 raw
 1000  ###  LD r0, 0x0       // Load a 0 to ensure a proper jump
-a109  ###  JZ r1, 0x1, 0x9  // Jump to our program start
+a109  ###  JZ r0, 0x1, 0x9  // Jump to our program start
       ###
       ###  // ----------------------------------------------------------------------------
       ###  // Display Function
